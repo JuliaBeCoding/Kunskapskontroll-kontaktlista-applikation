@@ -1,0 +1,10 @@
+body {
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+#errorMessage {
+  color: red;
+  font-weight: 600;
+}
