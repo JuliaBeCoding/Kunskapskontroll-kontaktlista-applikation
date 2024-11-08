@@ -2,9 +2,45 @@ body {
   width: 800px;
   margin: 0 auto;
   margin-top: 50px;
+  background-color: rgb(116, 32, 32);
+}
+
+p {
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+li {
+  color: white;
 }
 
 #errorMessage {
   color: red;
   font-weight: 600;
+}
+
+button,
+#create, 
+#delete {
+  background-color: rgb(12, 4, 7);
+  color: white;
+  border: 2px solid black;
+  margin: 5px;
+  padding: 6px;
+  border-radius: 2px;
+  font-weight: 600;
+  width: 100px;
+}
+
+input {
+  background-color: rgb(118, 114, 114, 0.7);
+  border: 2px solid white;
+  border-radius: 2px;
+  padding: 6px;
+  color: white;
+}
+
+input::placeholder {
+  color: white;
 }

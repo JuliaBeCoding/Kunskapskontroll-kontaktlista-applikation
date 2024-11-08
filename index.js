@@ -1,5 +1,3 @@
-// Om textfälten är tomma samt addera kontakter.
-
 let errorMessage = document.getElementById('errorMessage');
 
 document.getElementById('create').addEventListener('click', function (e) {
@@ -16,73 +14,63 @@ document.getElementById('create').addEventListener('click', function (e) {
 
     let contactList = document.getElementById('contactList');
     let contactItem = document.createElement('li');
-    contactItem.innerHTML = `
-      ${firstName} ${phoneNumber}
-      <button class="changeBtn">Change</button>
-      <button class="deleteBtn">Delete</button>
-      `
+    
+    let firstNameInput = document.createElement('input');
+    firstNameInput.type = 'text';
+    firstNameInput.value = firstName;
+    firstNameInput.disabled = true;
+
+    let phoneNumberInput = document.createElement('input');
+    phoneNumberInput.type = 'text';
+    phoneNumberInput.value = phoneNumber;
+    phoneNumberInput.disabled = true;
+
+    let changeBtn = document.createElement('button');
+    changeBtn.textContent = 'Change';
+    changeBtn.className = 'changeBtn';
+
+    let deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.className = 'deleteBtn';
+
+    contactItem.appendChild(firstNameInput);
+    contactItem.appendChild(phoneNumberInput);
+    contactItem.appendChild(changeBtn);
+    contactItem.appendChild(deleteBtn);
 
     contactList.appendChild(contactItem);
-    btnEvents(contactItem);
 
-    // Redigera kontakt.
-
-    function btnEvents(contactItem) {
-
-    contactItem.querySelector('.changeBtn').addEventListener('click', function () {
-      let contactText = contactItem.firstChild.textContent.trim();
-      let [currentFirstName, currentPhoneNumber] = contactText.split(' ');
-
-      let firstNameInput = document.createElement('input');
-      firstNameInput.type = 'text';
-      firstNameInput.value = currentFirstName;
-
-      let firstPhoneNumberInput = document.createElement('input');
-      firstPhoneNumberInput.type = 'text';
-      firstPhoneNumberInput.value = currentPhoneNumber;
-
-      contactItem.innerHTML = '';
-
-      contactItem.appendChild(firstNameInput);
-      contactItem.appendChild(firstPhoneNumberInput);
-      
-      let saveBtn = document.createElement('button');
-      saveBtn.textContent = 'Save';
-      contactItem.appendChild(saveBtn);
-
-      saveBtn.addEventListener('click', function () {
-        if (firstNameInput.value === "" || firstPhoneNumberInput.value === "") {
-          errorMessage.textContent = "Can´t be empty!";
-          errorMessage.style.display = 'block';
-        } else {
-          errorMessage.style.display = 'none';
-
-          let updatedFirstName = firstNameInput.value;
-          let updatedPhoneNumber = firstPhoneNumberInput.value;
-
-          contactItem.innerHTML = `
-          ${updatedFirstName} ${updatedPhoneNumber}
-          <button class="changeBtn">Change</button>
-          <button class="deleteBtn">Delete</button>        
-          `;
-          btnEvents(contactItem);
-        }
-      }) 
-    })
-
-    // Radera enskild kontakt.
-
-    contactItem.querySelector('.deleteBtn').addEventListener('click', function () {
-      contactList.removeChild(contactItem);
-    });
-  }
+    contactItemBtns(contactItem, firstNameInput, phoneNumberInput, changeBtn, deleteBtn);
 
     document.getElementById('firstName').value = "";
     document.getElementById('phoneNumber').value = "";
   }
 })
 
-// Radera allt.
+function contactItemBtns(contactItem, firstNameInput, phoneNumberInput, changeBtn) {
+  changeBtn.addEventListener('click', function () {
+    if (changeBtn.textContent === 'Change') {
+      firstNameInput.disabled = false;
+      phoneNumberInput.disabled = false;
+      changeBtn.textContent = 'Save';
+    } else {
+      if (firstNameInput.value === "" || phoneNumberInput.value === "") {
+        errorMessage.textContent = 'Can´t be empty!';
+        errorMessage.style.display = 'block';
+        } else {
+        errorMessage.style.display = 'none';
+            
+        firstNameInput.disabled = true;
+        phoneNumberInput.disabled = true;
+        changeBtn.textContent = 'Change';
+      }
+    }
+  })
+
+  contactItem.querySelector('.deleteBtn').addEventListener('click', function () {
+    contactItem.remove();
+  });
+}
 
 document.getElementById('delete').addEventListener('click', function (e) {
   e.preventDefault();
